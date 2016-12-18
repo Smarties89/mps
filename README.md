@@ -15,6 +15,7 @@ rstr creates a random string of numbers and upper/lowercase characters.
 >>> mps.rstr(nsize=100)
 '5QRDHYESVHMNL68E0IPYEIP3TXBUU86V26PSIEZ4AWE1FAX3G2WCSJ38NAIHB9DM3ZCCI102AI6TAOC967XM3UW6ZH5X9S8OQR23'
 >>> 
+```
 
 # hdcache
 hdcache makes it easy to use the harddrive as a cache for function results. An example below shows how to do it, and the result of calling the script twice is below that.
