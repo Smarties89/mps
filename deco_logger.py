@@ -5,8 +5,8 @@ def deco_logger(log, length=None):
         def wrapped(*args, **kwargs):
             log.info(u"{} args:{}, kwargs:{}".format(
                 f.__name__,
-                ','.join([str(arg)[0:length] for arg in args]),
-                ','.join([str(arg)[0:length] for arg in kwargs]),
+                u','.join([str(arg)[0:length] for arg in args]),
+                u','.join([str(arg)[0:length] for arg in kwargs]),
                 ))
             return f(*args, **kwargs)
 
