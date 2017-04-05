@@ -1,15 +1,30 @@
-from uuid import uuid4
 import json
 import os
 import logging
+import string
+import random
+from datetime import datetime
 
 log = logging.getLogger(__name__)
 
+
+# Slighty modified version of
+# http://stackoverflow.com/questions/2257441/random-string-generation-with-upper-case-letters-and-digits-in-python
+def randstr(n):
+    chars = string.ascii_uppercase + string.digits
+    return ''.join(random.choice(chars) for _ in range(n))
+
+
 class ErrorRecoveryFile(object):
-    def __init__(self, save_path, data):
+    def __init__(self, save_path, data, prefix=None):
         self.save_path = save_path 
         self.data = data
-        self.dataid = str(uuid4())
+        if prefix is None:
+            prefix = ""
+
+        self.dataid = prefix
+        self.dataid += datetime.now().strftime("%y_%m_%d_%H_%M")
+        self.dataid += "__" + randstr(6)
         self._status = 'inprogress'
         self.current = self._new_current(self._status)
         with open(self.current, "w") as f:
