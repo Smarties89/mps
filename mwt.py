@@ -1,7 +1,7 @@
 import time
 
 
-class MWT(object):
+class MemoizeWithTimeout(object):
     """Memoize With Timeout
     The implementation is taken from Leslie Polzer at
     http://code.activestate.com/recipes/325905-memoize-decorator-with-timeout
@@ -30,14 +30,20 @@ class MWT(object):
         def func(*args, **kwargs):
             kw = sorted(kwargs.items())
             key = (args, tuple(kw))
+
             try:
                 v = self.cache[key]
                 self.log.info("cache")
-                if (time.time() - v[1]) > self.timeout:
+                if (time.time() - v[1]) > self.timeout or kwargs.get('mwt_flush', False):
                     raise KeyError
             except KeyError:
                 self.log.info("new")
+
+                if 'mwt_flush' in kwargs:
+                    del kwargs['mwt_flush']
+
                 v = self.cache[key] = f(*args,**kwargs),time.time()
+
             return v[0]
         func.func_name = f.__name__
 

@@ -1,8 +1,11 @@
+import logging
 import os
 from os import remove
-from hdcache import hdcache
+from time import sleep
 
+from .hdcache import hdcache
 from .errorrecoveryfile import ErrorRecoveryFile
+from .mwt import MemoizeWithTimeout
 
 _changed = False
 
@@ -59,3 +62,39 @@ def test_errorrecovery():
     assert os.path.exists(oldpath) == False
     # Should not give an exception.
     er.remove()
+
+
+memoized_i = 0
+@MemoizeWithTimeout(logging.getLogger(), 0.1)
+def memoized_function():
+    global memoized_i
+    memoized_i += 1
+    return memoized_i
+
+
+def test_mwt_normal_use():
+    global memoized_i
+    memoized_i = 0
+    assert memoized_function() == 1
+    assert memoized_i == 1
+    assert memoized_function() == 1
+    assert memoized_i == 1
+
+    sleep(0.15)
+
+    assert memoized_i == 1
+    assert memoized_function() == 2
+    assert memoized_i == 2
+    assert memoized_function() == 2
+    assert memoized_i == 2
+
+
+def test_mwt_with_flush():
+    global memoized_i
+    memoized_i = 0
+    assert memoized_function(mwt_flush=True) == 1
+    assert memoized_i == 1
+    assert memoized_function(mwt_flush=True) == 2
+    assert memoized_i == 2
+    assert memoized_function(mwt_flush=True) == 3
+    assert memoized_i == 3
