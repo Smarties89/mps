@@ -2,17 +2,27 @@
 My Python Snippets
 
 My Python Snippets is a collection of nice to have and missing batteries for Python.
+The snippes are organised as a library, but is separated into individual files that can be included in projects together.
+
 Documentation is on this one page. 
 
 
-# rstr
-rstr creates a random string of numbers and upper/lowercase characters.
+# Table of Contents
+
+ * [randstr](#randstr) - get a random string of numbers/characters
+ * [hdcache](#hdcache) - hdcache makes it easy to use the harddrive as a cache for function results
+ * [Contributors](#Contributors)
+
+
+
+# randstr
+randstr creates a random string of numbers and upper/lowercase characters.
 
 ```
 >>> import mps
->>> mps.rstr()
+>>> mps.randstr()
 'N5KZRC06'
->>> mps.rstr(nsize=100)
+>>> mps.randstr(nsize=100)
 '5QRDHYESVHMNL68E0IPYEIP3TXBUU86V26PSIEZ4AWE1FAX3G2WCSJ38NAIHB9DM3ZCCI102AI6TAOC967XM3UW6ZH5X9S8OQR23'
 >>> 
 ```
