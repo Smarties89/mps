@@ -65,7 +65,7 @@ def test_errorrecovery():
 
 
 memoized_i = 0
-@MemoizeWithTimeout(logging.getLogger(), 0.1)
+@MemoizeWithTimeout(.1)
 def memoized_function():
     global memoized_i
     memoized_i += 1

@@ -1,17 +1,21 @@
 import time
+import logging
+
+log = logging.getLogger(__name__)
 
 
 class MemoizeWithTimeout(object):
     """Memoize With Timeout
-    The implementation is taken from Leslie Polzer at
+
+
+    The implementation builds on Leslie Polzer code from 
     http://code.activestate.com/recipes/325905-memoize-decorator-with-timeout
-    and slighty modified to support log.
+    The code have been modified to support log and flushing.
     """
     _caches = {}
     _timeouts = {}
 
-    def __init__(self, log, timeout=2):
-        self.log = log
+    def __init__(self, timeout=2):
         self.timeout = timeout
 
     def collect(self):
@@ -33,11 +37,11 @@ class MemoizeWithTimeout(object):
 
             try:
                 v = self.cache[key]
-                self.log.info("cache")
+                log.info("cache")
                 if (time.time() - v[1]) > self.timeout or kwargs.get('mwt_flush', False):
                     raise KeyError
             except KeyError:
-                self.log.info("new")
+                log.info("new")
 
                 if 'mwt_flush' in kwargs:
                     del kwargs['mwt_flush']
