@@ -20,11 +20,9 @@ class SimpleCache:
 
     def get(self, *args):
         key = self._generate_key(args)
-        print key
         cache = self._cache.get(key, None)
         # Not in cache
         if cache is None:
-            print(self._cache)
             return None
 
         # Not valid anymore after timeout
@@ -35,5 +33,4 @@ class SimpleCache:
 
     def save(self, data, *args):
         key = self._generate_key(args)
-        print(key)
         self._cache[key] = {'data': data, 'created': time()}
