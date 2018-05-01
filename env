@@ -1,6 +1,0 @@
-#!/bin/bash
-
-function ,mps {
-	cd $PROJECT_PATH/mps
-	workon mps
-}
